@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compiti Pulizie Casa</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Compiti Pulizie Casa</h1>
+    <div>
+      <label for="freeDays">Giorni liberi a settimana (seleziona due):</label><br />
+      <select id="freeDays" multiple size="7">
+        <option value="0">Domenica</option>
+        <option value="1">Lunedì</option>
+        <option value="2">Martedì</option>
+        <option value="3">Mercoledì</option>
+        <option value="4">Giovedì</option>
+        <option value="5">Venerdì</option>
+        <option value="6">Sabato</option>
+      </select>
+    </div>
+    <button id="generateBtn">Genera compiti</button>
+
+    <ul id="tasksList"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+const tasks = [
+  "Cucina",
+  "Lavastoviglie",
+  "Fare il letto",
+  "Togliere la polvere",
+  "Passare aspirapolvere",
+  "Lavare a terra",
+  "Pulire bagno"
+];
+
+const hourPerDay = 60;
+const taskTime = 15;
+
+const generateBtn = document.getElementById("generateBtn");
+const tasksList = document.getElementById("tasksList");
+const freeDaysSelect = document.getElementById("freeDays");
+
+function generateTasks() {
+  const freeDays = Array.from(freeDaysSelect.selectedOptions).map(o => parseInt(o.value));
+  if (freeDays.length !== 2) {
+    alert("Seleziona esattamente due giorni liberi.");
+    return;
+  }
+  tasksList.innerHTML = "";
+
+  const days = [0,1,2,3,4,5,6];
+  const workDays = days.filter(d => !freeDays.includes(d));
+
+  const tasksPerDay = {};
+  let taskIndex = 0;
+  for (const day of workDays) {
+    tasksPerDay[day] = [];
+    let assignedTime = 0;
+    while (assignedTime < hourPerDay && taskIndex < tasks.length) {
+      tasksPerDay[day].push(tasks[taskIndex]);
+      assignedTime += taskTime;
+      taskIndex++;
+    }
+  }
+
+  while (taskIndex < tasks.length) {
+    for (const day of workDays) {
+      if (taskIndex >= tasks.length) break;
+      tasksPerDay[day].push(tasks[taskIndex]);
+      taskIndex++;
+    }
+  }
+
+  const today = new Date().getDay();
+
+  if (freeDays.includes(today)) {
+    tasksList.innerHTML = "<li>Giorno libero!</li>";
+  } else {
+    const todayTasks = tasksPerDay[today] || [];
+    if (todayTasks.length === 0) {
+      tasksList.innerHTML = "<li>Nessun compito assegnato per oggi.</li>";
+    } else {
+      for (const t of todayTasks) {
+        const li = document.createElement("li");
+        li.textContent = t;
+        tasksList.appendChild(li);
+      }
+    }
+  }
+}
+
+generateBtn.addEventListener("click", generateTasks);
